@@ -9,10 +9,11 @@ test.beforeEach(async ({ page }) => {
   });
 
   await page.goto("https://conduit.bondaracademy.com/");
-  await page.getByText("Sign in").click();
-  await page.getByRole("textbox", { name: "Email" }).fill("nevenadb@test.com");
-  await page.getByRole("textbox", { name: "Password" }).fill("12345678");
-  await page.getByRole("button").click();
+  //following functionality is moved to auth.setup.ts and playwright.config.ts projects[]
+  // await page.getByText("Sign in").click();
+  // await page.getByRole("textbox", { name: "Email" }).fill("nevenadb@test.com");
+  // await page.getByRole("textbox", { name: "Password" }).fill("12345678");
+  // await page.getByRole("button").click();
 });
 
 test("has title", async ({ page }) => {
