@@ -2,7 +2,11 @@
   "name": "pw-apitest-app",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "create-delete-chrome": "npx playwright test workingWithAPI.spec.ts --project=chromium",
+    "create-delete-firefox": "npx playwright test workingWithAPI.spec.ts --project=firefox",
+    "create-delete-all": "npm run create-delete-chrome && npm run create-delete-firefox"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -10,5 +14,8 @@
   "devDependencies": {
     "@playwright/test": "^1.55.0",
     "@types/node": "^24.3.0"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.0.0"
   }
 }

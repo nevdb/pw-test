@@ -1,5 +1,6 @@
 import { test, expect, request } from "@playwright/test";
 import tags from "../test-data/tags.json";
+import { faker } from "@faker-js/faker";
 
 test.beforeEach(async ({ page }) => {
   await page.route("*/**/api/tags", async (route) => {
@@ -42,39 +43,42 @@ test("has title", async ({ page }) => {
 });
 
 test("delete article", async ({ page, request }) => {
-  const response = await request.post(
-    "https://conduit-api.bondaracademy.com/api/users/login",
-    {
-      //request body in the request in other frameworks is 'body', but in PW is 'data'
-      data: {
-        user: { email: "nevenadb@test.com", password: "12345678" },
-      },
-    }
-  );
+  // const response = await request.post(
+  //   "https://conduit-api.bondaracademy.com/api/users/login",
+  //   {
+  //     //request body in the request in other frameworks is 'body', but in PW is 'data'
+  //     data: {
+  //       user: { email: "nevenadb@test.com", password: "12345678" },
+  //     },
+  //   }
+  // );
 
-  const responseBody = await response.json();
-  const accessToken = responseBody.user.token;
+  // const responseBody = await response.json();
+  // const accessToken = responseBody.user.token;
 
   const articleResponse = await request.post(
     "https://conduit-api.bondaracademy.com/api/articles/",
     {
       data: {
         article: {
-          title: "New article 5",
+          title: "New article 1",
           description: "new 2",
           body: "new text",
           tagList: [],
         },
       },
-      headers: {
-        Authorization: `Token ${accessToken}`,
-      },
+      // headers: {
+      //   Authorization: `Token ${accessToken}`,
+      // },
     }
   );
   expect(articleResponse.status()).toEqual(201);
 
   await page.getByText("Global Feed").click();
-  await page.getByText("New article 4").click();
+  await page.getByText("New article 1").click();
+  await page.screenshot({ path: "screenshots/formsLayoutsPage.png" });
+  // save a screenshot in a binary format
+  const buffer = await page.screenshot();
   await page.getByRole("button", { name: "Delete Article" }).first().click();
 
   await expect(page.locator("app-article-list h1").first()).not.toContainText(
@@ -109,25 +113,25 @@ test("create article", async ({ page, request }) => {
     "Playwright is awesome"
   );
 
-  const response = await request.post(
-    "https://conduit-api.bondaracademy.com/api/users/login",
-    {
-      //request body in the request in other frameworks is 'body', but in PW is 'data'
-      data: {
-        user: { email: "nevenadb@test.com", password: "12345678" },
-      },
-    }
-  );
+  // const response = await request.post(
+  //   "https://conduit-api.bondaracademy.com/api/users/login",
+  //   {
+  //     //request body in the request in other frameworks is 'body', but in PW is 'data'
+  //     data: {
+  //       user: { email: "nevenadb@test.com", password: "12345678" },
+  //     },
+  //   }
+  // );
 
-  const responseBody = await response.json();
-  const accessToken = responseBody.user.token;
+  // const responseBody = await response.json();
+  // const accessToken = responseBody.user.token;
 
   const deleteArticleResponse = await request.delete(
     `https://conduit-api.bondaracademy.com/api/articles/${slugId}`,
     {
-      headers: {
-        Authorization: `Token ${accessToken}`,
-      },
+      // headers: {
+      //   Authorization: `Token ${accessToken}`,
+      // },
     }
   );
 

@@ -15,7 +15,7 @@ import { setgroups } from "process";
 export default defineConfig({
   testDir: "./tests",
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
@@ -31,6 +31,13 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
+    extraHTTPHeaders: {
+      Authorization: `Token ${process.env.ACCESS_TOKEN}`,
+    },
+    video: {
+      mode: "on",
+      size: { width: 1920, height: 1080 },
+    },
   },
 
   /* Configure projects for major browsers */
