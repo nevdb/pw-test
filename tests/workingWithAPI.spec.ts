@@ -1,6 +1,7 @@
 import { test, expect, request } from "@playwright/test";
 import tags from "../test-data/tags.json";
 import { faker } from "@faker-js/faker";
+// import { test } from "../test-options";
 
 test.beforeEach(async ({ page }) => {
   await page.route("*/**/api/tags", async (route) => {
@@ -9,7 +10,7 @@ test.beforeEach(async ({ page }) => {
     });
   });
 
-  await page.goto("https://conduit.bondaracademy.com/");
+  await page.goto("/");
   //following functionality is moved to auth.setup.ts and playwright.config.ts projects[]
   // await page.getByText("Sign in").click();
   // await page.getByRole("textbox", { name: "Email" }).fill("nevenadb@test.com");
