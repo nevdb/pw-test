@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 import { setgroups } from "process";
-
+import type { TestOptions } from "./test-options";
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -12,7 +12,7 @@ import { setgroups } from "process";
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig({
+export default defineConfig<TestOptions>({
   testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: false,
@@ -28,6 +28,8 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
+    baseURL: "https://conduit.bondaracademy.com/",
+    globalQaURL: "https://www.globalsqa.com/demo-site/draganddrop/",
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
@@ -42,6 +44,22 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    {
+      name: "dev",
+      use: {
+        ...devices["Desktop Chrome"],
+        // baseURL: 'http://localhost:3000',
+        baseURL: "https://conduit.bondaracademy.com/",
+      },
+    },
+    {
+      name: "staging",
+      use: {
+        ...devices["Desktop Chrome"],
+        // baseURL: 'http://localhost:3000',
+        baseURL: "https://conduit.bondaracademy.com/",
+      },
+    },
     { name: "setup", testMatch: "auth.setup.ts" },
     {
       name: "chromium",
